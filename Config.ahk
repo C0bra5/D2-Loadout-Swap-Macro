@@ -3,7 +3,7 @@
 class ProfileData {
     Name := "1"
     Keybind := ""
-    ClickDelay := 100
+    ClickDelay := 150
     TargetSwaps := 80
     SelectedGear := "Helmet"
     LoadoutGrid := []
@@ -30,9 +30,9 @@ class ConfigManager {
     static Presets := Map("A", [], "B", [], "C", [])
 
     ; Centralized numeric bounds
-    static MinClickDelay := 100
+    static MinClickDelay := 150
     static MaxClickDelay := 500
-    static DefaultClickDelay := 100
+    static DefaultClickDelay := 150
 
     static MinTargetSwaps := 1
     static MaxTargetSwaps := 1000
