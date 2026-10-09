@@ -101,13 +101,27 @@ class ConfigManager {
     static Load() {
         ini := this.IniPath
 
+        ; warn if the config isn't initialized and the default res isn't mapped
+        if (!FileExist(ini) && !Coordinates.IsPrimaryMonitorResolutionSupported()) {
+            warnResult := MsgBox("
+                (
+                    Your primary monitor's resolution isn't supported!
+                    Open an issue with a screenshot of your inventory with your loadouts open.
+
+                    Do you want to continue anyway?
+            )", "Warning!", "YesNo Icon! Default2")
+
+            if (warnResult != "Yes")
+                Exit()
+        }
+
         ; Global settings
         this.ActivePreset := IniRead(ini, "Global", "ActivePreset", "A")
         if (this.ActivePreset != "A" && this.ActivePreset != "B" && this.ActivePreset != "C")
             this.ActivePreset := "A"
 
         this.ActiveProfileIndex := Integer(IniRead(ini, "Global", "ActiveProfileIndex", 1))
-        this.SelectedResolution := IniRead(ini, "Global", "SelectedResolution", "1920x1080")
+        this.SelectedResolution := IniRead(ini, "Global", "SelectedResolution", Coordinates.DefaultResolution)
         this.ExitHotkey := IniRead(ini, "Global", "ExitHotkey", "F4")
         this.ReloadHotkey := IniRead(ini, "Global", "ReloadHotkey", "F5")
 

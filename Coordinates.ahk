@@ -109,6 +109,8 @@ class Coordinates {
             Map("Helmet", [1258, 178], "Arms", [1269, 251], "Chest", [1258, 346], "Legs", [1264, 414], "ClassItem", [1258, 514]))
     }
 
+    static DefaultResolution := "1920x1080"
+
     static Register(resKey, cols, rows, gearMap) {
         loadouts := Map()
         for r, y in rows {
@@ -128,7 +130,23 @@ class Coordinates {
     static Get(resKey) {
         if this.Resolutions.Has(resKey)
             return this.Resolutions[resKey]
-        return this.Resolutions["1920x1080"]
+        return this.Resolutions[this.DefaultResolution]
+    }
+
+    static GetPrimaryMonitorResolution() {
+        primaryIndex := MonitorGetPrimary()
+        MonitorGet(primaryIndex, &left, &top, &right, &bottom)
+        return (right - left) "x" (bottom - top)
+    }
+
+    static IsPrimaryMonitorResolutionSupported() {
+        res := this.GetPrimaryMonitorResolution()
+        if (this.Resolutions.Has(res) ) {
+            ; if it's supported use it as the default for anyting else going forward.
+            this.DefaultResolution := res
+            return true
+        }
+        return false
     }
 
     static GetSupportedList() {
