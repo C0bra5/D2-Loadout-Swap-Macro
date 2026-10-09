@@ -55,3 +55,5 @@ Presets switch your entire hotkey and profile configuration between different co
 Escape key cannot be used as a hotkey. It serves as a permanent and second way to stop a swap sequence early.
 
 Gear check coordinates for 4:3 resolutions may be incorrect.
+
+Your game must be on your main monitor in the same resolution as the monitor since pixel colour checking does not work well when an application's resolution is not the same as that of the monitor it is displayed on.
