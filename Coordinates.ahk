@@ -133,13 +133,20 @@ class Coordinates {
         return this.Resolutions[this.DefaultResolution]
     }
 
-    static GetDefaultResolution() {
+    static GetPrimaryMonitorResolution() {
         primaryIndex := MonitorGetPrimary()
         MonitorGet(primaryIndex, &left, &top, &right, &bottom)
-        res := (right - left) "x" (bottom - top)
-        if (this.Resolutions.Has(res))
-            return res
-        return this.DefaultResolution
+        return (right - left) "x" (bottom - top)
+    }
+
+    static IsPrimaryMonitorResolutionSupported() {
+        res := this.GetPrimaryMonitorResolution()
+        if (this.Resolutions.Has(res) ) {
+            ; if it's supported use it as the default for anyting else going forward.
+            this.DefaultResolution := res
+            return true
+        }
+        return false
     }
 
     static GetSupportedList() {
