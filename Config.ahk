@@ -107,7 +107,7 @@ class ConfigManager {
             this.ActivePreset := "A"
 
         this.ActiveProfileIndex := Integer(IniRead(ini, "Global", "ActiveProfileIndex", 1))
-        this.SelectedResolution := IniRead(ini, "Global", "SelectedResolution", "1920x1080")
+        this.SelectedResolution := IniRead(ini, "Global", "SelectedResolution", Coordinates.GetDefaultResolution())
         this.ExitHotkey := IniRead(ini, "Global", "ExitHotkey", "F4")
         this.ReloadHotkey := IniRead(ini, "Global", "ReloadHotkey", "F5")
 
