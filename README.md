@@ -1,4 +1,4 @@
-This is the only macro allowed for swapping loadouts for the Perk Overload Glitch (POG) or and all other Universal Cannon Glitches (UCG). This macro created by [redfish18](https://www.speedrun.com/users/redfish18), but we host our own version for safety reasons.
+This is the only macro allowed for swapping loadouts for the Perk Overload Glitch (POG) or and all other Universal Cannon Glitches (UCG). This macro was created by [redfish18](https://www.speedrun.com/users/redfish18), but we host our own version for safety reasons.
 
 Our mirror can be found on [Github](https://github.com/C0bra5/POG-swaps-macro) and Latest releases can be found [here](https://github.com/C0bra5/POG-swaps-macro/releases/latest).
 
