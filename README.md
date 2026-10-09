@@ -1,6 +1,6 @@
 This is the only macro allowed for swapping loadouts in runs submitted to Destiny 2's Speedrun.com leaderboards. This macro was created for the Perk Overload Glitch (POG) and all other Universal Cannon Glitches (UCG) that require extensive loadout swapping. [Redfish18](https://github.com/Redfish18/POG-swaps-macro) created this macro, but we host and maintain our own version for safety reasons.
 
-Our mirror is on [GitHub](https://github.com/C0bra5/POG-swaps-macro), and the latest releases are [here](https://github.com/C0bra5/POG-swaps-macro/releases/latest).
+Our mirror is on [GitHub](https://github.com/C0bra5/D2-Loadout-Swap-Macro), and the latest releases are [here](https://github.com/C0bra5/D2-Loadout-Swap-Macro/releases/latest).
 
 # Configuration & Usage Guide
 
