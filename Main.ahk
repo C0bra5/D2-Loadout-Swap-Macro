@@ -12,12 +12,12 @@ SetWinDelay(-1)
 SetControlDelay(-1)
 
 ; Include components
-#Include "Coordinates.ahk"
-#Include "Timer.ahk"
-#Include "Config.ahk"
-#Include "Swapper.ahk"
-#Include "Hotkeys.ahk"
-#Include "UI.ahk"
+#Include Coordinates.ahk
+#Include Timer.ahk
+#Include Config.ahk
+#Include Swapper.ahk
+#Include Hotkeys.ahk
+#Include UI.ahk
 
 ; Initialize precision timer and configuration
 HighResTimer.Initialize()
