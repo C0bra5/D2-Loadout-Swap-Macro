@@ -78,7 +78,7 @@ class Swapper {
             if (currentColor != lastGearColor) {
                 currentSwaps++
                 lastGearColor := currentColor
-                ToolTip(currentSwaps "/" targetSwaps, ttX, ttY)
+                ToolTip("D2SRC 1.0.0 | " currentSwaps "/" targetSwaps, ttX, ttY)
 
                 if (currentSwaps >= targetSwaps)
                     return true ; Abort sleep immediately
