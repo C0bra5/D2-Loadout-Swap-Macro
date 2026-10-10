@@ -6,7 +6,7 @@ Our mirror is on [GitHub](https://github.com/C0bra5/D2-Loadout-Swap-Macro), and 
 
 ## Requirements
 
-AHKv2: https://www.autohotkey.com/download/
+Auto Hot Key (AHK) V2.0 : https://www.autohotkey.com
 
 ---
 
