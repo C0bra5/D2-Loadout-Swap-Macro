@@ -1,7 +1,10 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
-D2SWAPPER_NEEDS_D2 := true
+D2SWAPPER_NEEDS_D2 := false
+D2SWAPPER_VERSION := "1.1.0"
+D2SWAPPER_OVERRIDE_RES := false
+D2SWAPPER_RES_OVERRIDE := [1920, 1440]
 
 ; Configure system-wide coordinate and input modes
 CoordMode("Mouse", "Screen")

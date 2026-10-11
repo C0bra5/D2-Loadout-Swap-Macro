@@ -36,7 +36,7 @@ class Swapper {
     }
 
     static RunLoop(profile, sequence) {
-        resData := Coordinates.Get(ConfigManager.SelectedResolution)
+        resData := Coordinates.Get()
         
         ; Normalize gear key (e.g. "Class Item" -> "ClassItem")
         gearKey := StrReplace(profile.SelectedGear, " ", "")
@@ -78,7 +78,7 @@ class Swapper {
             if (currentColor != lastGearColor) {
                 currentSwaps++
                 lastGearColor := currentColor
-                ToolTip("D2SRC 1.0.0 | " currentSwaps "/" targetSwaps, ttX, ttY)
+                ToolTip("D2SRC " D2SWAPPER_VERSION " | " currentSwaps "/" targetSwaps, ttX, ttY)
 
                 if (currentSwaps >= targetSwaps)
                     return true ; Abort sleep immediately
@@ -93,15 +93,15 @@ class Swapper {
             nextSlot := sequence[currentIndex]
             coord := resData.Loadouts[nextSlot]
 
-            ; Move cursor to next slot
-            DllCall("SetCursorPos", "Int", coord.X, "Int", coord.Y)
-
             ; Precise sleep with sub-interval pixel checking throughout the delay
             clickDelay := ConfigManager.ClampClickDelay(profile.ClickDelay)
             HighResTimer.Sleep(clickDelay, onTick)
 
             if (this.CancelRequested || currentSwaps >= targetSwaps)
                 break
+
+            ; Move cursor to next slot
+            DllCall("SetCursorPos", "Int", coord.X, "Int", coord.Y)
 
             ; Click slot
             this.ClickMouse()

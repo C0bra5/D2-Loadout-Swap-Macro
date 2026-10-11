@@ -14,6 +14,18 @@ class UI {
     static HKReload := ""
     static HKExit := ""
     static TextStatus := ""
+    static MonitorToId := Map()
+    static IdToMonitor := Map()
+
+    static __new() {
+        monitorCount := MonitorGetCount()
+        loop monitorCount {
+            MonitorGet(A_Index, &left, &top, &right, &bottom)
+            key := A_Index ": " MonitorGetName(A_Index) " (" (right - left) "x" (bottom - top) ")"
+            UI.MonitorToId[key] := A_Index
+            UI.IdToMonitor[A_Index] := key
+        }
+    }
 
     static Show(startMode := "") {
         if (this.GuiObj != "") {
@@ -42,9 +54,11 @@ class UI {
         this.RadioPresets["B"].OnEvent("Click", (*) => this.OnPresetChanged("B"))
         this.RadioPresets["C"].OnEvent("Click", (*) => this.OnPresetChanged("C"))
 
-        g.Add("Text", "x275 y18 w160 h16", "Game Resolution:")
-        resList := Coordinates.GetSupportedList()
-        this.DDLResolution := g.Add("DropDownList", "x275 y34 w165", resList)
+        g.Add("Text", "x270 y18 w160 h16", "Monitor")
+        resList := []
+        for key in UI.MonitorToId
+            resList.Push(key)
+        this.DDLResolution := g.Add("DropDownList", "x270 y34 w170 choose" ConfigManager.SelectedMonitor, resList)
         this.DDLResolution.OnEvent("Change", (*) => this.OnResolutionChanged())
 
         ; -------------------------------------------------------------
@@ -154,7 +168,7 @@ class UI {
         }
 
         ; Set Resolution dropdown
-        this.DDLResolution.Text := ConfigManager.SelectedResolution
+        this.DDLResolution.Text := UI.IdToMonitor[ConfigManager.SelectedMonitor]
 
         ; Refresh profile list and current profile
         this.RefreshProfileDropdown()
@@ -322,7 +336,8 @@ class UI {
     }
 
     static OnResolutionChanged() {
-        ConfigManager.SelectedResolution := this.DDLResolution.Text
+        asd := UI.MonitorToId[this.DDLResolution.Text]
+        ConfigManager.SelectedMonitor := asd
     }
 
     static OnExitHotkeyChanged() {
@@ -346,7 +361,7 @@ class UI {
 
     static OnReloadScript() {
         this.SaveUIToActiveProfile()
-        ConfigManager.SelectedResolution := this.DDLResolution.Text
+        ConfigManager.SelectedResolution := UI.MonitorToId[this.DDLResolution.Text]
 
         valExit := this.HKExit.Value
         if (StrLower(valExit) != "escape" && StrLower(valExit) != "esc")
@@ -362,7 +377,7 @@ class UI {
 
     static OnSaveSettings() {
         this.SaveUIToActiveProfile()
-        ConfigManager.SelectedResolution := this.DDLResolution.Text
+        ConfigManager.SelectedResolution := UI.MonitorToId[this.DDLResolution.Text]
 
         valExit := this.HKExit.Value
         if (StrLower(valExit) != "escape" && StrLower(valExit) != "esc")
