@@ -1,6 +1,8 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
+D2SWAPPER_NEEDS_D2 := true
+
 ; Configure system-wide coordinate and input modes
 CoordMode("Mouse", "Screen")
 CoordMode("Pixel", "Screen")

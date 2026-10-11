@@ -7,7 +7,9 @@ class HotkeysManager {
 
     static RegisterActivePreset() {
         ; Disable previously registered profile hotkeys
-        HotIfWinActive("ahk_exe destiny2.exe")
+        if (D2SWAPPER_NEEDS_D2) {
+            HotIfWinActive("ahk_exe destiny2.exe")
+        }
         for key in this.RegisteredProfileHotkeys {
             try Hotkey("*" key, "Off")
             try Hotkey(key, "Off")
@@ -32,7 +34,9 @@ class HotkeysManager {
         }
 
         ; Reset context condition
-        HotIfWinActive()
+        if (D2SWAPPER_NEEDS_D2) {
+            HotIfWinActive()
+        }
     }
 
     static RegisterExitHotkey() {

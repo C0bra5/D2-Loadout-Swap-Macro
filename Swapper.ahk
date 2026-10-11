@@ -9,7 +9,7 @@ class Swapper {
             return
 
         ; Only execute if Destiny 2 is the active window
-        if !WinActive("ahk_exe destiny2.exe")
+        if D2SWAPPER_NEEDS_D2 && !WinActive("ahk_exe destiny2.exe")
             return
 
         ; Safety check: ensure at least one loadout slot is enabled
