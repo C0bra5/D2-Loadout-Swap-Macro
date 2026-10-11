@@ -193,6 +193,17 @@ class Coordinates {
         }
     }
 
+    Offset(x, y) {
+        for _,v in this.Loadouts {
+            v.X := v.X + x
+            v.Y := v.Y + y
+        }
+        for _,v in this.Gear {
+            v[1] := v[1] + x
+            v[2] := v[2] + y
+        }
+    }
+
     static Register(width, height, cols, rows, gearMap) {
         loadouts := Map()
         for r, y in rows {
@@ -217,7 +228,9 @@ class Coordinates {
             return Coordinates(D2SWAPPER_RES_OVERRIDE[1], D2SWAPPER_RES_OVERRIDE[2])
         }
         MonitorGet(ConfigManager.SelectedMonitor, &left, &top, &right, &bottom)
-        return Coordinates(right - left, bottom - top)
+        ret := Coordinates(right - left, bottom - top)
+        ret.Offset(left, top)
+        return ret
         
     }
 }
