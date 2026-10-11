@@ -1,7 +1,3 @@
-// regex repalce for coordinates from ahk, run with flags "msi"
-// ^\s*;\s*(\S[^\r\n]*)(?:\n|\r\n)\s*this\.Register(\(")(\d+)x(\d+)(",\s*)([^\r\n]+)(?:\n|\r\n)([^\r\n]+)
-// new D2SwapperLayout$2$1$5$3, $4,$6 $7,
-
 const CLICK_COLORS = [ "black", "white" ];
 const GEAR_SLOT_NAMES = ["Helmet", "Arms", "Chest", "Legs", "ClassItem" ]
 const LOADOUT_GRID_SIZE = [4,5];
