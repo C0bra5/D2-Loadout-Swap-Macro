@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style type="text/css">
+	:root{
+		font-family: sans-serif;
+		color: #EFEFEF;
+	}
+	html, body, canvas {
+		padding: 0;
+		margin: 0;
+		height: 100vh;
+		width: 100vw;
+	}
+	body {
+		position: relative;
+	}
+	@keyframes scale {
+		from {
+			transform: scale(10%, 10%);
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+			transform: scale(100%, 100%);
+		}
+	}
+	.circle {
+		animation: scale linear 1s forwards 1;
+		pointer-events: none;
+	}
+	svg {
+		transform-origin: center center;
+		position: absolute;
+	}
+	#bg {
+		background-color: rgb(100, 100, 115);
+	}
+	.highlight-slots .gear-slot {
+		fill: rgba(0, 0, 255, 0.5);
+	}
+	.highlight-slots .loadout-slot {
+		fill: rgba(255, 0, 0, 0.5);
+	}
+	.highlight-boxes #gearBox {
+		fill: rgba(255,0,255,0.25);
+	}
+	.highlight-boxes #loadoutBox {
+		fill: rgba(255,255,0,0.25);
+	}
+	</style>
+	<script src="./main.js" defer="true"></script>
+</head>
+<body class="highlight-slots">
+	<svg id="bg" viewBox="0 0 2560 1440" xmlns="http://www.w3.org/2000/svg">
+
+		<rect id="gearBox"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
+		<rect id="loadoutBox" x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
+
+		<rect id="HelmetSlot"    class="gear-slot"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
+		<rect id="ArmsSlot"      class="gear-slot"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
+		<rect id="ChestSlot"     class="gear-slot"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
+		<rect id="LegsSlot"      class="gear-slot"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
+		<rect id="ClassItemSlot" class="gear-slot"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
+
+		<rect id="HelmetChecker"    class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
+		<rect id="ArmsChecker"      class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
+		<rect id="ChestChecker"     class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
+		<rect id="LegsChecker"      class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
+		<rect id="ClassItemChecker" class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
+		
+		<rect id="loadout0"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout1"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout2"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout3"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout4"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout5"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout6"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout7"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout8"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout9"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout10"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout11"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout12"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout13"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout14"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout15"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout16"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout17"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout18"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout19"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+	</svg>
+	<div style="position: absolute; font-weight: bold; font-size: 2em">
+		<div>Swaps: <span id="swapCounter">0</span></div>
+		<div>Clicks: <span id="clickCounter">0</span></div>
+		<div><label for="selResolution">Resolution</label>: <select name="selResolution" id="selResolution"></select></div>
+		<div><label for="btnShowSlots">Slot Highlights</label>: <button name="btnShowSlots" id="btnShowSlots">Toggle</button></div>
+		<div><label for="btnShowBoxes">Layout Debug</label>: <button name="btnShowBoxes" id="btnShowBoxes">Toggle</button></div>
+	</div>
+</body>
+</html>
