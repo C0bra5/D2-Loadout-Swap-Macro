@@ -58,12 +58,12 @@ class Swapper {
         ; 1: Move cursor to first slot in the ascending sequence
         firstSlot := sequence[1]
         firstCoord := resData.Loadouts[firstSlot]
-        DllCall("SetCursorPos", "Int", firstCoord.X, "Int", firstCoord.Y)
 
         ; 2: Sample initial gear pixel color
         lastGearColor := PixelGetColor(gearCoord[1], gearCoord[2], "RGB")
 
         ; 3: Perform initial click
+        DllCall("SetCursorPos", "Int", firstCoord.X, "Int", firstCoord.Y)
         this.ClickMouse()
 
         currentIndex := 1
