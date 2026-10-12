@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "py",
+			"args": ["-3", "${workspaceFolder}/tester/create-standalone-tester.py"],
+			"group": "build",
+			"label": "Build standalone tester using py launcher"
+		},
+		{
+			"type": "shell",
+			"command": "python",
+			"args": ["${workspaceFolder}/tester/create-standalone-tester.py"],
+			"group": "build",
+			"label": "Build standalone tester using env python"
+		}
+	]
+}
