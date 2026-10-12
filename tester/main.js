@@ -2,25 +2,103 @@ const CLICK_COLORS = [ "black", "white" ];
 const GEAR_SLOT_NAMES = ["Helmet", "Arms", "Chest", "Legs", "ClassItem" ]
 const LOADOUT_GRID_SIZE = [4,5];
 
-const STATE = {};
-STATE.clickColor = 0;
-STATE.swapping = false;
-STATE.swapCounter = 0;
-STATE.clickCounter = 0;
-STATE.lastClicked = null;
-STATE.lastClickAt = new Date();
-STATE.startedAt = new Date();
-STATE.swapResetTimeoutID = 0;
-STATE.bg = document.getElementById("bg");
-STATE.loadoutSlots = [...document.querySelectorAll(".loadout-slot")];
-STATE.gearCheckers = [...document.querySelectorAll(".gear-checker")];
+const ELEMS = {
+	/** @type {HTMLSpanElement} */
+	clickCounter: document.getElementById("clickCounter"),
+	/** @type {HTMLSpanElement} */
+	goodSwapCounter: document.getElementById("goodSwapCounter"),
+	/** @type {HTMLSpanElement} */
+	badSwapCounter: document.getElementById("badSwapCounter"),
+	/** @type {HTMLSpanElement} */
+	streakTimer: document.getElementById("streakTimer"),
+	/** @type {HTMLSpanElement} */
+	usedSlotCounter: document.getElementById("usedSlotCounter"),
+	/** @type {HTMLSelectElement} */
+	selResolution: document.getElementById("selResolution"),
+	/** @type {SVGRectElement} */
+	gearBox: document.getElementById("gearBox"),
+	/** @type {SVGRectElement} */
+	loadoutBox: document.getElementById("loadoutBox"),
+	/** @type {HTMLButtonElement} */
+	txtChangeMean: document.getElementById("txtChangeMean"),
+	/** @type {HTMLButtonElement} */
+	txtChangeSD: document.getElementById("txtChangeSD"),
+	/** @type {SVGSVGElement} */
+	bg: document.getElementById("bg"),
+	/** @type {SVGRectElement[]} */
+	loadoutSlots: [...document.querySelectorAll(".loadout-slot")],
+	/** @type {SVGRectElement[]} */
+	gearCheckers: [...document.querySelectorAll(".gear-checker")],
+};
 
-const swapCounter = document.getElementById("swapCounter");
-const clickCounter = document.getElementById("clickCounter");
-const resolutionSelector = document.getElementById("selResolution");
-const gearBox = document.getElementById("gearBox");
-const loadoutBox = document.getElementById("loadoutBox");
+/**
+ * @param {number} mean 
+ * @param {number} stdev 
+ * @returns {number}
+ */
+function gaussianRandom(mean=0, stdev=1) {
+    const u = 1 - Math.random(); // Converting [0,1) to (0,1]
+    const v = Math.random();
+    const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    // Transform to the desired mean and standard deviation:
+    return z * stdev + mean;
+}
 
+class TesterState {
+	constructor() {
+		this.clickColor = 0;
+		this.swapping = false;
+		this.swapCounter = 0;
+		this.badSwapCounter = 0;
+		this.clickCounter = 0;
+		/** @type {string?} */
+		this.lastClicked = null;
+		/** @type {string?} */
+		this.lastSwapped = null;
+		/** @type {Object<string,boolean>} */
+		this.usedSlotTracker = {};
+		this.usedSlotCounter = 0;
+		this.changeMean = 160;
+		this.changeSD = 10;
+		this.lastClickAt = new Date();
+		this.startedAt = new Date();
+		this.isStandalone = document.getElementById("standaloneScript") != null;
+	}
+
+	getSwapDelay() {
+		if (this.changeSD <= 0) {
+			return this.changeMean;
+		}
+		return Math.round(gaussianRandom(this.changeMean, this.changeSD))
+	}
+
+	updateChangeMean() {
+		let parsed = parseInt(ELEMS.txtChangeMean.value);
+		if (isNaN(parsed)) parsed = 160;
+		this.changeMean = Math.min(0, parsed);
+	}
+
+	updateChangeSD() {
+		let parsed = parseInt(ELEMS.txtChangeSD.value);
+		if (isNaN(parsed)) parsed = 10;
+		this.changeSD = Math.max(0, parsed);
+	}
+
+	/**
+	 * @param {Date} now 
+	 */
+	resetStreak(now) {
+		this.swapCounter = 0;
+		this.clickCounter = 0;
+		this.lastClicked = null;
+		this.lastSwapped = null;
+		this.startedAt = now;
+		this.badSwapCounter = 0;
+		this.usedSlotCounter = 0;
+		this.usedSlotTracker = {};
+	}
+}
+const STATE = new TesterState();
 
 class D2SwapperLayout {
 	constructor(width, height) {
@@ -59,23 +137,25 @@ class D2SwapperLayout {
 	activate() {
 		const boxSize = this.getBoxSize()
 
-		gearBox.setAttribute("x", boxSize.x)
-		gearBox.setAttribute("y", boxSize.yg)
-		gearBox.setAttribute("width", boxSize.w)
-		gearBox.setAttribute("height", boxSize.h)
+		ELEMS.gearBox.setAttribute("x", boxSize.x)
+		ELEMS.gearBox.setAttribute("y", boxSize.yg)
+		ELEMS.gearBox.setAttribute("width", boxSize.w)
+		ELEMS.gearBox.setAttribute("height", boxSize.h)
 
-		loadoutBox.setAttribute("x", boxSize.x)
-		loadoutBox.setAttribute("y", boxSize.yl)
-		loadoutBox.setAttribute("width", boxSize.w)
-		loadoutBox.setAttribute("height", boxSize.h)
+		ELEMS.loadoutBox.setAttribute("x", boxSize.x)
+		ELEMS.loadoutBox.setAttribute("y", boxSize.yl)
+		ELEMS.loadoutBox.setAttribute("width", boxSize.w)
+		ELEMS.loadoutBox.setAttribute("height", boxSize.h)
 
 		const baseGearSlotOffsets = [[1816,292], [1816, 460], [1816, 628], [1816, 797], [1816, 964]].map(x => [x[0] / 2560, x[1] / 1440]);
 		const checkOffsets = [[66,64],[86, 44],[66, 64],[77,31],[66,64]].map(x => [x[0] * boxSize.s, x[1] * boxSize.s]);
 		const loadoutOffsets = [98, 456].map(x => x * boxSize.s);
-		STATE.bg.style.backgroundImage = `url(./screenshots/${this.width}x${this.height}.png)`
-		STATE.bg.setAttribute("viewBox", `0 0 ${this.width} ${this.height}`)
-		STATE.bg.setAttribute("width", this.width);
-		STATE.bg.setAttribute("height", this.height);
+		if (!STATE.isStandalone) {
+			ELEMS.bg.style.backgroundImage = `url(./screenshots/${this.width}x${this.height}.png)`
+		}
+		ELEMS.bg.setAttribute("viewBox", `0 0 ${this.width} ${this.height}`)
+		ELEMS.bg.setAttribute("width", this.width);
+		ELEMS.bg.setAttribute("height", this.height);
 		const gearSize = Math.floor(128 * boxSize.s);
 		const loadoutSize = Math.floor(118 * boxSize.s);
 		for (let i = 0; i < GEAR_SLOT_NAMES.length; i++) {
@@ -112,9 +192,6 @@ class D2SwapperLayout {
 		}
 	}
 }
-function Map(...args) {
-	return args;
-}
 
 STATE.resolutions = [
 	new D2SwapperLayout(1280, 1024),
@@ -145,50 +222,32 @@ STATE.resolutions = [
 	new D2SwapperLayout(3840, 2160),
 ]
 
-function getRandomColor() {
-	return CLICK_COLORS[STATE.clickColor = (STATE.clickColor + 1) % CLICK_COLORS.length];
-}
-function createCircle(x,y) {
-	const div = document.createElement("div");
-	const color = getRandomColor();
-	x -= 50;
-	y -= 50;
-	div.innerHTML = `<svg class="circle" style="left: ${x}px;top: ${y}px" height="100" width="100" xmlns="http://www.w3.org/2000/svg"><circle r="45" cx="50" cy="50" fill="${color}" /></svg>`;
-	const svg = div.children[0];
-	return svg;
-}
-function appendAndKillIn(elem, killIn) {
-	document.body.append(elem);
-	setTimeout(() => {
-		elem.remove();
-	}, killIn);
-}
-
-function recolorSlots() {
-	const color = STATE.gearCheckers[0].getAttribute("fill") == "red" ? "green" : "red";
-	for (const elem of STATE.gearCheckers) {
+/**
+ * @param {string} color 
+ */
+function recolorSlots(color) {
+	for (const elem of ELEMS.gearCheckers) {
 		elem.setAttribute("fill", color);
 	}
 }
 
 function updateCounters() {
-	swapCounter.innerText = `${STATE.swapCounter}`;
+	const now = new Date();
+	ELEMS.goodSwapCounter.innerText = `${STATE.swapCounter}`;
+	ELEMS.badSwapCounter.innerText = `${STATE.badSwapCounter}`;
+	ELEMS.usedSlotCounter.innerText = `${STATE.usedSlotCounter}`;
+	const delta = now - STATE.startedAt;
+	ELEMS.streakTimer.innerText = (delta / 1000).toFixed(3);
 	if (STATE.clickCounter > 1) {
-		const startDeltaSeconds = (new Date() - STATE.startedAt) / 1000;
-		clickCounter.innerText = `${STATE.clickCounter} (${(STATE.clickCounter / startDeltaSeconds).toFixed(3)} cps)`;
+		const startDeltaSeconds = (now - STATE.startedAt) / 1000;
+		ELEMS.clickCounter.innerText = `${STATE.clickCounter} (${(STATE.clickCounter / startDeltaSeconds).toFixed(3)} cps)`;
 	}
 	else {
-		clickCounter.innerText = `${STATE.clickCounter}`;
+		ELEMS.clickCounter.innerText = `${STATE.clickCounter}`;
 	}
 }
 
-function gaussianRandom(mean=0, stdev=1) {
-    const u = 1 - Math.random(); // Converting [0,1) to (0,1]
-    const v = Math.random();
-    const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
-    // Transform to the desired mean and standard deviation:
-    return z * stdev + mean;
-}
+
 
 /**
  * @param {MouseEvent} ev 
@@ -196,28 +255,35 @@ function gaussianRandom(mean=0, stdev=1) {
 function onLoadoutSwapped(ev) {
 	const now = new Date();
 	const diff = now - STATE.lastClickAt;
-	if (diff > 500) {
-		STATE.swapCounter = 0;
-		STATE.clickCounter = 0;
-		STATE.lastClicked = null;
-		STATE.startedAt = now;
+	if (diff > 1000) {
+		STATE.resetStreak(now);
 	}
 	STATE.lastClickAt = now;
 	// check if the click is on an other thing
-	if (STATE.lastClicked == ev.target) {
+	if (STATE.lastClicked == ev.target.id) {
 		return;
 	}
-	STATE.lastClicked = ev.target;
+	if (STATE.usedSlotTracker[ev.target.id] == null) {
+		STATE.usedSlotTracker[ev.target.id] = true;
+		STATE.usedSlotCounter++;
+	}
+	STATE.lastClicked = ev.target.id;
 	STATE.clickCounter++;
 	updateCounters();
 	if (!STATE.swapping) {
 		STATE.swapping = true;
 		setTimeout(() => {
-			recolorSlots()
-			STATE.swapCounter++;
+			recolorSlots(ev.target.getAttribute("data-swap-fill"))
+			if (STATE.lastSwapped != ev.target.id) {
+				STATE.swapCounter++;
+			}
+			else {
+				STATE.badSwapCounter++;
+			}
+			STATE.lastSwapped = ev.target.id;
 			updateCounters();
 			STATE.swapping = false;
-		}, 450 + Math.round(gaussianRandom(0, 10)))
+		}, STATE.getSwapDelay())
 	}
 }
 function updateLayout() {
@@ -233,20 +299,34 @@ STATE.resolutions.forEach((e,i,a) => {
 	const option = document.createElement("option");
 	option.value = i;
 	option.innerText = e.name;
-	resolutionSelector.appendChild(option);
+	ELEMS.selResolution.appendChild(option);
 })
-resolutionSelector.addEventListener("change", e => {
-	STATE.resolutions[resolutionSelector.value].activate()
+ELEMS.selResolution.addEventListener("change", () => {
+	window.removeEventListener("resize", updateLayout)
+	STATE.resolutions[ELEMS.selResolution.value].activate()
 })
+ELEMS.txtChangeMean.addEventListener("change", () => STATE.updateChangeMean())
+ELEMS.txtChangeSD.addEventListener("change", () => STATE.updateChangeSD())
 document.getElementById("btnShowSlots").addEventListener("click", () => {
 	document.body.classList.toggle("highlight-slots")
 })
 document.getElementById("btnShowBoxes").addEventListener("click", () => {
 	document.body.classList.toggle("highlight-boxes")
 })
-STATE.bg.addEventListener("mousedown", (ev) => {
-	appendAndKillIn(createCircle(ev.x, ev.y), 1000);
+ELEMS.bg.addEventListener("mousedown", (ev) => {
+	const color = CLICK_COLORS[STATE.clickColor = (STATE.clickColor + 1) % CLICK_COLORS.length];
+	const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	svg.classList.add("circle");
+	svg.style.left = `${ev.x - 50}px`;
+	svg.style.top = `${ev.y - 50}px`;
+	svg.setAttribute("width", 100);
+	svg.setAttribute("height", 100);
+	svg.innerHTML = `<circle r="45" cx="50" cy="50" fill="${color}" />`;
+	document.body.append(svg);
+	setTimeout(() => {
+		svg.remove();
+	}, 1000);
 })
-STATE.loadoutSlots.forEach(x => x.addEventListener("mousedown", onLoadoutSwapped))
+ELEMS.loadoutSlots.forEach(x => x.addEventListener("mousedown", onLoadoutSwapped))
 STATE.resolutions[0].activate()
 updateLayout();

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Loadout Swap Macro Tester</title>
 	<style type="text/css">
 	:root{
 		font-family: sans-serif;
@@ -52,7 +52,6 @@
 		fill: rgba(255,255,0,0.25);
 	}
 	</style>
-	<script src="./main.js" defer="true"></script>
 </head>
 <body class="highlight-slots">
 	<svg id="bg" viewBox="0 0 2560 1440" xmlns="http://www.w3.org/2000/svg">
@@ -66,39 +65,57 @@
 		<rect id="LegsSlot"      class="gear-slot"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
 		<rect id="ClassItemSlot" class="gear-slot"    x="-1000" y="-1000" width="128" height="128" fill="transparent"/>
 
-		<rect id="HelmetChecker"    class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
-		<rect id="ArmsChecker"      class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
-		<rect id="ChestChecker"     class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
-		<rect id="LegsChecker"      class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
-		<rect id="ClassItemChecker" class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="red" />
+		<rect id="HelmetChecker"    class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="#000000" />
+		<rect id="ArmsChecker"      class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="#000000" />
+		<rect id="ChestChecker"     class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="#000000" />
+		<rect id="LegsChecker"      class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="#000000" />
+		<rect id="ClassItemChecker" class="gear-checker" x="-1000" y="-1000" width="128" height="128" fill="#000000" />
 		
-		<rect id="loadout0"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout1"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout2"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout3"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout4"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout5"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout6"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout7"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout8"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout9"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout10"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout11"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout12"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout13"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout14"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout15"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout16"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout17"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout18"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
-		<rect id="loadout19"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" />
+		<rect id="loadout0"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FF0000" />
+		<rect id="loadout1"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#00FF00" />
+		<rect id="loadout2"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#0000FF" />
+		<rect id="loadout3"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FFFF00" />
+		<rect id="loadout4"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FF00FF" />
+		<rect id="loadout5"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#00FFFF" />
+		<rect id="loadout6"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FFFFFF" />
+		<rect id="loadout7"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FF7700" />
+		<rect id="loadout8"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FF0077" />
+		<rect id="loadout9"     class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#00FF77" />
+		<rect id="loadout10"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#77FF00" />
+		<rect id="loadout11"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#7700FF" />
+		<rect id="loadout12"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#0077FF" />
+		<rect id="loadout13"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#77FFAA" />
+		<rect id="loadout14"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#77AAFF" />
+		<rect id="loadout15"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#AA77FF" />
+		<rect id="loadout16"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#AAFF77" />
+		<rect id="loadout17"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FFAA77" />
+		<rect id="loadout18"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#FF77AA" />
+		<rect id="loadout19"    class="loadout-slot" x="-1000" y="-1000" width="128" height="128" fill="transparent" data-swap-fill="#AAFFAA" />
 	</svg>
-	<div style="position: absolute; font-weight: bold; font-size: 2em">
-		<div>Swaps: <span id="swapCounter">0</span></div>
-		<div>Clicks: <span id="clickCounter">0</span></div>
-		<div><label for="selResolution">Resolution</label>: <select name="selResolution" id="selResolution"></select></div>
-		<div><label for="btnShowSlots">Slot Highlights</label>: <button name="btnShowSlots" id="btnShowSlots">Toggle</button></div>
-		<div><label for="btnShowBoxes">Layout Debug</label>: <button name="btnShowBoxes" id="btnShowBoxes">Toggle</button></div>
+	<div style="position: absolute; font-weight: bold; background-color: rgba(0,0,0,0.75); padding:0.5em; min-width: 12em;">
+		<div style="font-size: 1.75em; line-height: 1.2em;">
+			<div title="The number of clicks performed during the current streak. Only increments when the clicked slots is differnt from the last one.">Clicks: <span id="clickCounter">0</span></div>
+			<div title="The amount of times a swap resulted in a new item being shown.">Good Swaps: <span id="goodSwapCounter">0</span></div>
+			<div title="If you go too fast while swapping, you may end up triggering a swap for the active slot, which results in no changes from a swap.">Bad Swaps: <span id="badSwapCounter">0</span></div>
+			<div title="The amount of individual slots clicked during the streak.">Slots Used: <span id="usedSlotCounter">0</span></div>
+			<div title="The amount of time between the first click and the last click of the current streak.">Time Taken: <span id="streakTimer">0.000</span>s</div>
+		</div>
+		<hr>
+		<div>
+			<div>Layout Settings</div>
+			<div>
+				<select Title="Forces a specific resolution" name="selResolution" id="selResolution"></select>
+				<button Title="Toggles the debug overlay for slot positioning." name="btnShowSlots" id="btnShowSlots">Toggle Slots</button>
+				<button Title="Toggles the debug overlay for UI layer placement."name="btnShowBoxes" id="btnShowBoxes">Toggle Layout</button>
+			</div>
+			<div style="margin-top:0.25em;">Slot Change Settings</div>
+			<div>
+				Mean: <input id="txtChangeMean" type="number" value="160" min="0" max="1000" style="width: 4em"> ms
+				&nbsp;
+				SD: <input id="txtChangeSD" type="number" value="10" min="0" max="1000" style="width: 4em"> ms
+			</div>
+		</div>
 	</div>
+	<script src="./main.js" defer="true"></script>
 </body>
 </html>
