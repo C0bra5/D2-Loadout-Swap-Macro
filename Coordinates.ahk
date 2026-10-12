@@ -107,8 +107,8 @@ class Coordinates {
     }
 
     /**
-     * @param {Number} x 
-     * @param {Number} y 
+     * @param {Integer} x 
+     * @param {Integer} y 
      */
     Offset(x, y) {
         this.MonitorOffset := [x, y]
