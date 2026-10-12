@@ -20,6 +20,10 @@ const ELEMS = {
 	/** @type {SVGRectElement} */
 	loadoutBox: document.getElementById("loadoutBox"),
 	/** @type {HTMLButtonElement} */
+	btnShowSlots: document.getElementById("btnShowSlots"),
+	/** @type {HTMLButtonElement} */
+	btnShowBoxes: document.getElementById("btnShowBoxes"),
+	/** @type {HTMLButtonElement} */
 	txtChangeMean: document.getElementById("txtChangeMean"),
 	/** @type {HTMLButtonElement} */
 	txtChangeSD: document.getElementById("txtChangeSD"),
@@ -287,8 +291,8 @@ function onLoadoutSwapped(ev) {
 	}
 }
 function updateLayout() {
-	const w = window.outerWidth;
-	const h = window.outerHeight;
+	const w = window.innerWidth;
+	const h = window.innerHeight;
 	new D2SwapperLayout(w, h).activate()
 }
 
@@ -305,14 +309,14 @@ ELEMS.selResolution.addEventListener("change", () => {
 	window.removeEventListener("resize", updateLayout)
 	STATE.resolutions[ELEMS.selResolution.value].activate()
 })
-ELEMS.txtChangeMean.addEventListener("change", () => STATE.updateChangeMean())
-ELEMS.txtChangeSD.addEventListener("change", () => STATE.updateChangeSD())
-document.getElementById("btnShowSlots").addEventListener("click", () => {
+ELEMS.btnShowSlots.addEventListener("click", () => {
 	document.body.classList.toggle("highlight-slots")
 })
-document.getElementById("btnShowBoxes").addEventListener("click", () => {
+ELEMS.btnShowBoxes.addEventListener("click", () => {
 	document.body.classList.toggle("highlight-boxes")
 })
+ELEMS.txtChangeMean.addEventListener("change", () => STATE.updateChangeMean())
+ELEMS.txtChangeSD.addEventListener("change", () => STATE.updateChangeSD())
 ELEMS.bg.addEventListener("mousedown", (ev) => {
 	const color = CLICK_COLORS[STATE.clickColor = (STATE.clickColor + 1) % CLICK_COLORS.length];
 	const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
