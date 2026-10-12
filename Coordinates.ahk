@@ -33,6 +33,7 @@ class Coordinates {
     XOffset := 0
     YGearOffset := 0
     YLoadoutOffset := 0
+    MonitorOffset := [0,0]
     Loadouts := Map()
     Gear := Map()
 
@@ -85,6 +86,7 @@ class Coordinates {
     }
 
     Offset(x, y) {
+        this.MonitorOffset := [x, y]
         for _,v in this.Loadouts {
             v.X := v.X + x
             v.Y := v.Y + y
@@ -95,6 +97,9 @@ class Coordinates {
         }
     }
 
+    /**
+     * @returns {Coordinates}
+     */
     static Get() {
         if (D2SWAPPER_OVERRIDE_RES) {
             return Coordinates(D2SWAPPER_RES_OVERRIDE[1], D2SWAPPER_RES_OVERRIDE[2])

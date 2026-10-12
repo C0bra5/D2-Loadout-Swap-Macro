@@ -48,12 +48,11 @@ class Swapper {
         slot20 := resData.Loadouts[20]
         slot16 := resData.Loadouts[16]
         rowDelta := slot20.Y - slot16.Y
-        ttX := slot20.X
-        ttY := slot20.Y + Round(rowDelta * 0.65)
+        ttX := slot20.X - Round(rowDelta * 0.5) - resData.MonitorOffset[1]
+        ttY := slot20.Y + Round(rowDelta * 0.65) - resData.MonitorOffset[2]
 
         currentSwaps := 0
         targetSwaps := profile.TargetSwaps
-        ToolTip(currentSwaps "/" targetSwaps, ttX, ttY)
 
         ; 1: Move cursor to first slot in the ascending sequence
         firstSlot := sequence[1]
@@ -64,6 +63,8 @@ class Swapper {
         ; 50ms should be about 20fps which should be fine for most players
         Sleep(50)
         lastGearColor := PixelGetColor(gearCoord[1], gearCoord[2], "RGB")
+        
+        ToolTip(currentSwaps "/" targetSwaps, ttX, ttY)
         
         ; 3: Perform initial click
         this.ClickMouse()
