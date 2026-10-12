@@ -182,8 +182,15 @@ function updateCounters() {
 	}
 }
 
+function gaussianRandom(mean=0, stdev=1) {
+    const u = 1 - Math.random(); // Converting [0,1) to (0,1]
+    const v = Math.random();
+    const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    // Transform to the desired mean and standard deviation:
+    return z * stdev + mean;
+}
+
 /**
- * 
  * @param {MouseEvent} ev 
  */
 function onLoadoutSwapped(ev) {
@@ -210,7 +217,7 @@ function onLoadoutSwapped(ev) {
 			STATE.swapCounter++;
 			updateCounters();
 			STATE.swapping = false;
-		}, 250)
+		}, 450 + Math.round(gaussianRandom(0, 10)))
 	}
 }
 function updateLayout() {
@@ -220,6 +227,7 @@ function updateLayout() {
 }
 
 window.addEventListener("resize", updateLayout)
+
 
 STATE.resolutions.forEach((e,i,a) => {
 	const option = document.createElement("option");
