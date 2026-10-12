@@ -2,41 +2,62 @@
 
 class Coordinates {
     ; script constants
+    /** @type {Array<Integer>} */
     static LOADOUT_DIMS := [4,5]
+    /** @type {Array<String>} */
     static GEAR_SLOT_NAMES := ["Helmet", "Arms", "Chest", "Legs", "ClassItem"]
-    static DEFAULT_RESOLUTION := "1920x1080"
 
     ; used to scale all other measurements
+    /** @type {Float} */
     static BASE_WIDTH := 2560.0
+    /** @type {Float} */
     static BASE_HEIGHT := 1440.0
+    /** @type {Float} */
     static BASE_GEAR_SLOT_SIZE := 128.0
+    /** @type {Float} */
     static BASE_LOADOUT_SLOT_SIZE := 118.0
+    /** @type {Array<Float>} */
     static BASE_LOADOUT_GRID_OFFSET := [98.0, 456.0]
+    /** @type {Array<Array<Float>>} */
     static BASE_GEAR_SLOTS_OFFSETS := [
-        [1816, 292],
-        [1816, 460],
-        [1816, 628],
-        [1816, 797],
-        [1816, 964]
+        [1816.0, 292.0],
+        [1816.0, 460.0],
+        [1816.0, 628.0],
+        [1816.0, 797.0],
+        [1816.0, 964.0]
     ]
+    /** @type {Array<Array<Float>>} */
     static BASE_GEAR_CHECK_OFFSETS := [
-        [66, 64],
-        [86, 44],
-        [66, 64],
-        [77, 31],
-        [66, 64]
+        [66.0, 64.0],
+        [86.0, 44.0],
+        [66.0, 64.0],
+        [77.0, 31.0],
+        [66.0, 64.0]
     ]
 
+    /** @type {Integer} */
     Width := Coordinates.BASE_WIDTH
+    /** @type {Integer} */
     Height := Coordinates.BASE_HEIGHT
+    /** @type {Float} */
     Scale := 1.0
+    /** @type {Integer} */
     XOffset := 0
+    /** @type {Integer} */
     YGearOffset := 0
+    /** @type {Integer} */
     YLoadoutOffset := 0
+    /** @type {Array<Integer>} */
     MonitorOffset := [0,0]
+    /** @type {Map<Integer, {X:Integer,Y:Integer}>} */
     Loadouts := Map()
+    /** @type {Map<String, Array<Integer>>} */
     Gear := Map()
 
+    /**
+     * @param {Integer} width
+     * @param {Integer} height 
+     */
     __new(width, height) {
 		ar := width / height
 		br := 16 / 9
@@ -85,6 +106,10 @@ class Coordinates {
         }
     }
 
+    /**
+     * @param {Number} x 
+     * @param {Number} y 
+     */
     Offset(x, y) {
         this.MonitorOffset := [x, y]
         for _,v in this.Loadouts {
