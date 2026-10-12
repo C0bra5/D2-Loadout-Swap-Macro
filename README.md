@@ -12,10 +12,12 @@ Auto Hot Key (AHK) V2.0 : https://www.autohotkey.com
 
 ## Quick Start: Setting Up Your First Profile
 
-1. **Set Game Resolution** - Choose your current game resolution so coordinate detection aligns properly.
+1. **Select Your Monitor** - Select the monitor you use to play the game.
+    - The game must be in full-screen mode, or else the macro won't work.
 2. **Bind Trigger Hotkey** - Click inside the **Trigger Hotkey** input, press your preferred activation key, then click **Save Settings** to confirm and release field focus.
 3. **Configure Click Delay** - Enter the interval in milliseconds between loadout clicks.
-    - **Note:** *150 ms is the minimum delay allowed*, you cannot set it any lower. Modifying the macro to use a lower value is not allowed and will be grounds for rejection. If you want to go faster, you'll have to perform your swaps by hand.
+    - **150 ms is the minimum delay allowed for Speedrun.com submission.**,  _Modifying this macro to use a lower value is not allowed and will be grounds for run rejection._
+    - Due to a quirk in how D2 handles the swap requests, using a value below 180ms will considerably slow down the swaps when using 2-slot configurations.
 4. **Set Target Swaps** - Specify how many confirmed swaps the macro should execute before automatically stopping.
 5. **Select Gear Slot** - Pick the armor slot the macro polls to verify successful swaps.
     - **Important:** Your alternating loadouts must have visually distinct armor ornaments on this slot that correlate with perk status:
