@@ -25,6 +25,8 @@ Our mirror is on [GitHub](https://github.com/C0bra5/D2-Loadout-Swap-Macro), and 
     - **Loadout B:** No perk + **Ornament B**
 6. **Select Loadout Grid Slots** - Choose the loadout slots included in the rotation. Execution always runs in ascending order (left to right, top to bottom).
 
+![The macro's GUI.](docs/window.png)
+
 ---
 
 ## Core Concepts
