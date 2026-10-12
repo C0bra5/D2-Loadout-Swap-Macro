@@ -4,9 +4,9 @@ Our mirror is on [GitHub](https://github.com/C0bra5/D2-Loadout-Swap-Macro), and 
 
 # Configuration & Usage Guide
 
-## Requirements
-
-Auto Hot Key (AHK) V2.0 : https://www.autohotkey.com
+## Requirement
+- AutoHotkey V2.0: https://www.autohotkey.com
+  - Only needed if you are editing or running the script directly instead of using the executables we release.
 
 ---
 
@@ -53,14 +53,11 @@ Presets switch your entire hotkey and profile configuration between different co
 
 - **Reload Script**:  Halts current actions to interrupt the script while keeping it open.
 - **Exit Script**: Instantly forces the macro to close.
-- **Game Resolution**: Selects coordinate sets for UI clicks and pixel checks.
+- **Monitor**: Selects the monitor you play the game on.
 
 ---
 
 ## Extra Notes
 
-Escape key cannot be used as a hotkey. It serves as a permanent and second way to stop a swap sequence early.
-
-Gear check coordinates for 4:3 resolutions may be incorrect.
-
-Your game must be on your main monitor in the same resolution as the monitor since pixel colour checking does not work well when an application's resolution is not the same as that of the monitor it is displayed on.
+- The Escape key cannot be used as a hotkey. It serves as a permanent second way to stop a swap sequence early.
+- Your game must be in full screen for this macro to work.
