@@ -58,12 +58,14 @@ class Swapper {
         ; 1: Move cursor to first slot in the ascending sequence
         firstSlot := sequence[1]
         firstCoord := resData.Loadouts[firstSlot]
-
-        ; 2: Sample initial gear pixel color
-        lastGearColor := PixelGetColor(gearCoord[1], gearCoord[2], "RGB")
-
-        ; 3: Perform initial click
         DllCall("SetCursorPos", "Int", firstCoord.X, "Int", firstCoord.Y)
+
+        ; 2: wait for a frame to render and sample the initial gear pixel color
+        ; 50ms should be about 20fps which should be fine for most players
+        Sleep(50)
+        lastGearColor := PixelGetColor(gearCoord[1], gearCoord[2], "RGB")
+        
+        ; 3: Perform initial click
         this.ClickMouse()
 
         currentIndex := 1
@@ -101,6 +103,8 @@ class Swapper {
                 break
 
             ; Move cursor to next slot
+            ; We don't need to wait for the animation frame since the slots won't
+            ; while you're in the loadout screen regardless of resolution
             DllCall("SetCursorPos", "Int", coord.X, "Int", coord.Y)
 
             ; Click slot
