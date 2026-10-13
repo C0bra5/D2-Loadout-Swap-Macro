@@ -42,7 +42,7 @@ class HotkeysManager {
     static RegisterExitHotkey() {
         ; Unregister previous exit hotkey
         if (this.CurrentExitHotkey != "") {
-            HotIfWinNotActive("Destiny 2 Loadout Swapper")
+            HotIfWinNotActive(D2SWAPPER_WINDOW_TITLE)
             try Hotkey("*" this.CurrentExitHotkey, "Off")
             try Hotkey(this.CurrentExitHotkey, "Off")
             HotIfWinNotActive()
@@ -53,7 +53,7 @@ class HotkeysManager {
         if (exitKey != "" && StrLower(exitKey) != "escape" && StrLower(exitKey) != "esc") {
             try {
                 ; Fix: Only active when the Swapper UI window is NOT focused
-                HotIfWinNotActive("Destiny 2 Loadout Swapper")
+                HotIfWinNotActive(D2SWAPPER_WINDOW_TITLE)
                 Hotkey("*" exitKey, (*) => this.HandleExit(), "On")
                 HotIfWinNotActive()
                 this.CurrentExitHotkey := exitKey
@@ -80,7 +80,7 @@ class HotkeysManager {
             try Hotkey(this.CurrentReloadHotkey, "Off")
             HotIf()
 
-            HotIfWinNotActive("Destiny 2 Loadout Swapper")
+            HotIfWinNotActive(D2SWAPPER_WINDOW_TITLE)
             try Hotkey("*" this.CurrentReloadHotkey, "Off")
             try Hotkey(this.CurrentReloadHotkey, "Off")
             HotIfWinNotActive()
@@ -103,7 +103,7 @@ class HotkeysManager {
             ; When NOT swapping and Swapper UI is not active, reloadKey reloads the script
             ; (unless set to Escape, which is reserved for game menus when idle)
             if (StrLower(reloadKey) != "escape" && StrLower(reloadKey) != "esc") {
-                HotIfWinNotActive("Destiny 2 Loadout Swapper")
+                HotIfWinNotActive(D2SWAPPER_WINDOW_TITLE)
                 Hotkey("*" reloadKey, (*) => Reload(), "On")
                 HotIfWinNotActive()
             }

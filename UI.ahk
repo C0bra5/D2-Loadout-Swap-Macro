@@ -37,7 +37,7 @@ class UI {
             return
         }
 
-        g := Gui("-MaximizeBox", "Destiny 2 Loadout Swapper")
+        g := Gui("-MaximizeBox", D2SWAPPER_WINDOW_TITLE)
         this.GuiObj := g
         g.SetFont("s9", "Segoe UI")
 
