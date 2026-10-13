@@ -2,18 +2,18 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "shell",
+			"type": "process",
 			"command": "py",
-			"args": ["-3", "${workspaceFolder}/tester/create-standalone-tester.py"],
+			"args": ["-3", "${workspaceFolder}/build-release.py"],
 			"group": "build",
-			"label": "Build standalone tester using py launcher"
+			"label": "Build releases using py launcher"
 		},
 		{
 			"type": "shell",
 			"command": "python",
-			"args": ["${workspaceFolder}/tester/create-standalone-tester.py"],
+			"args": ["${workspaceFolder}/build-release.py"],
 			"group": "build",
-			"label": "Build standalone tester using env python"
+			"label": "Build releases using env python"
 		}
 	]
 }
