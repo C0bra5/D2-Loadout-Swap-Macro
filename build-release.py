@@ -20,8 +20,8 @@ def get_tag_or_commit():
 		tag_or_commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('utf8').strip()
 
 	# check if there are uncommited changes 
-	is_dirty = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('utf8').strip() == ""
-	if not is_dirty:
+	is_dirty = not subprocess.check_output(['git', 'status', '--short']).decode('utf8').strip() == ""
+	if is_dirty:
 		tag_or_commit += "-dirty"
 		
 	return tag_or_commit
